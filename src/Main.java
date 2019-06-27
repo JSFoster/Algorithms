@@ -1,12 +1,18 @@
+import java.util.Random;
+
 public class Main {
+    private static final int SIZE = 10;
+
     public static void main(String[] args) {
-        int[] array = {4, 12, 2, 24, 7, 1, 20, 1};
 
         System.out.println("Selection Sort results:");
-        selectionSort(array);
+        selectionSort(newArray());
 
         System.out.println("Insertion Sort results:");
-        insertionSort(array);
+        insertionSort(newArray());
+
+          System.out.println("Merge Sort results:");
+          mergeSort(newArray());
     }
 
     public static void print(int[] array) {
@@ -17,7 +23,20 @@ public class Main {
         System.out.println();
     }
 
+    public static int[] newArray() {
+        int[] array = new int[SIZE];
+
+        Random r = new Random();
+        for (int i = 0; i < array.length; i++) {
+            array[i] = r.nextInt(SIZE);
+        }
+
+        return array;
+    }
+
     public static void selectionSort(int[] array) {
+        long startTime = System.nanoTime();
+
         int pnt = 0;
         int lowest = 0;
 
@@ -36,10 +55,16 @@ public class Main {
             }
         } while (pnt < array.length);
 
+        long endTime = System.nanoTime();
+
         print(array);
+
+        System.out.println("Selection sort time taken: " + (endTime - startTime) / 1e+6 + " ms" + "\n");
     }
 
     public static void insertionSort(int[] array) {
+        long startTime = System.nanoTime();
+
         int key = 0;
 
         for (int i = key + 1; i < array.length; i++) {
@@ -55,6 +80,30 @@ public class Main {
             key++;
         }
 
+        long endTime = System.nanoTime();
+
         print(array);
+
+        System.out.println("Insertion sort time taken: " + (endTime - startTime) / 1e+6 + " ms" + "\n");
+    }
+
+    public static void mergeSort(int[] array) {
+        long startTime = System.nanoTime();
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 1; j < array.length; j++) {
+                if (array[j] < array[j-1]) {
+                    int tmp = array[j-1];
+                    array[j-1] = array[j];
+                    array[j] = tmp;
+                }
+            }
+        }
+
+        long endTime = System.nanoTime();
+
+        print(array);
+
+        System.out.println("Merge sort time taken: " + (endTime - startTime) / 1e+6 + " ms" + "\n");
     }
 }
